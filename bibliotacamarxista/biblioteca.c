@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
 
 #define MAX_LEITOR 100
 #define MAX_LIVROS 100
 
 int main()
 {
+    system("chcp 65001 > nul");
     char leitores[MAX_LEITOR][100];
     char titulos[MAX_LIVROS][100];
     char autores[MAX_LIVROS][100];
@@ -15,7 +18,7 @@ int main()
     int opcao;
 
     do {
-        printf("=== Biblioteca Marxista de Ponta Grossa ☭ ===\n\n");
+        printf("=== Biblioteca Marxista de Ponta Grossa [☭] ===\n\n");
         printf("1 - Cadastrar Proletariado \n");
         printf("2 - Distribuição de Conhecimento \n");
         printf("3 - Cadastro de Conhecimento\n");
@@ -27,6 +30,7 @@ int main()
         
         switch (opcao) {
             case 1:
+                // parte leo
                 printf("\nCadastrando Leitor...\n");
                 if (quantidadeLeitores < MAX_LEITOR) {
                     printf("Digite o nome do leitor: ");
@@ -52,6 +56,7 @@ int main()
                 break;
 
             case 2:
+                // parte ysaque
                 printf("\n--- Distribuição do Conhecimento ---\n");
                 if (quantidadeLeitores == 0) {
                     printf("Nenhum camarada cadastrado ainda! Cadastre um camarada primeiro.\n\n");
@@ -84,6 +89,7 @@ int main()
                 break;
 
             case 3:
+                // parte roger
                 printf("\nCadastro de Conhecimento\n");
 
                 if (quantidadeLivros < MAX_LIVROS) {
@@ -103,12 +109,34 @@ int main()
                 }
                 break;
 
-            case 4:
-                printf("\nRelatorio do dia\n");
-                // Parte do Kelvin
-                printf("Leitores cadastrados: %d\n", quantidadeLeitores);
-                printf("Livros no acervo: %d\n\n", quantidadeLivros);
+            case 4: {
+                // Parte do Kelvin 
+                time_t t = time(NULL);
+                struct tm tm = *localtime(&t);
+                char data[11];
+                sprintf(data, "%02d/%02d/%04d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+
+                printf("========================================\n");
+                printf("       RELATORIO DIARIO DA BIBLIOTECA\n");
+                printf("       Data: %s\n", data);
+                printf("========================================\n\n");
+
+                printf("Leitores (Camaradas) cadastrados: %d\n", quantidadeLeitores);
+                if (quantidadeLeitores > 0) {
+                    for (int i = 0; i < quantidadeLeitores; i++) {
+                        printf(" - %s\n", leitores[i]);
+                    }
+                }
+
+                printf("\nObras no acervo: %d\n", quantidadeLivros);
+                if (quantidadeLivros > 0) {
+                    for (int i = 0; i < quantidadeLivros; i++) {
+                        printf(" - %s (Autor: %s)\n", titulos[i], autores[i]);
+                    }
+                }
+                printf("\n");
                 break;
+            }
 
             case 5:
                 printf("\nAté mais, camarada! Mantenha-se lutando pelo fim do capitalismo.\n");
